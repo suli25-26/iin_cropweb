@@ -15,6 +15,8 @@ data-bs-toggle="modal" data-bs-target="#operationModal">
             <th>Ország</th>
             <th>Alapítás éve</th>
             <th>Kapacitás (hektár)</th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -25,6 +27,16 @@ data-bs-toggle="modal" data-bs-target="#operationModal">
                 <td>{{producer.country}}</td>
                 <td>{{producer.yearOfFoundation}}</td>
                 <td>{{producer.capacityHectare}}</td>
+                <td>
+                    <button class="btn btn-primary" (click)="editProducer(producer)"
+                    data-bs-toggle="modal" data-bs-target="#operationModal">
+                        Módosítás
+                    </button>
+                    <button class="btn btn-danger" (click)="deleteProducer(producer.id)">
+                        Törlés
+                    </button>
+
+                </td>
             </tr>
         }
     </tbody>
@@ -53,7 +65,33 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
 
         <form [formGroup]="producerForm" (ngSubmit)="save()"
         id="producerForm">
-
+            @if(!addMode) {
+                <div class="mb-2">
+                    <label for="id" class="form-label">Id</label>
+                    <input type="text" id="id" formControlName="id"
+                    class="form-control" readonly>
+                </div>
+            }
+            <div class="mb-2">
+                <label for="name" class="form-label">Név</label>
+                <input type="text" id="name" formControlName="name"
+                class="form-control">
+            </div>
+            <div class="mb-2">
+                <label for="country" class="form-label">Ország</label>
+                <input type="text" id="country" formControlName="country"
+                class="form-control">
+            </div>
+            <div class="mb-2">
+                <label for="yearOfFoundation" class="form-label">Alapítás éve</label>
+                <input type="text" id="yearOfFoundation" formControlName="yearOfFoundation"
+                class="form-control">
+            </div>
+            <div class="mb-2">
+                <label for="capacityHectare" class="form-label">Kapacitás (hektár)</label>
+                <input type="text" id="capacityHectare" formControlName="capacityHectare"
+                class="form-control">
+            </div>
 
         </form>
 
@@ -62,6 +100,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary"
+        data-bs-dismiss="modal"
         form="producerForm">
             Mentés
         </button>

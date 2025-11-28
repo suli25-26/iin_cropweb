@@ -50,8 +50,48 @@ export class ProducerComponent {
   }
   addProducer() {
     console.log('Add ...')
+    console.log(this.producerForm.value)
+    this.api.createProducer(this.producerForm.value).subscribe({
+      next: (res: any) => {
+        console.log(res)
+        this.producerForm.reset()
+        this.getProducers()
+      },
+      error: (error: any) => {
+        console.log(error)
+      }
+    })
   }
-  updateProducer() {}
-  editProducer() {}
-  deleteProducer() {}
+  updateProducer() {
+    console.log('Update ...')
+    this.api.updateProducer(this.producerForm.value).subscribe({
+      next: (res: any) => {
+        console.log(res) 
+        this.addMode = true 
+        this.producerForm.reset()
+        this.getProducers()
+      },
+      error: (error: any) => {
+        console.log(error)
+      }
+    })
+  }
+  editProducer(producer: any) {
+    console.log(producer)
+    this.addMode = false
+    this.producerForm.patchValue(producer)
+  }
+  deleteProducer(id: number) {
+    console.log('Törlés...')
+    this.api.deleteProducer(id).subscribe({
+      next: (res: any) => {
+        console.log(res)
+        this.getProducers();
+        //Sweetalert2
+      },
+      error: (error: any) => {
+        console.log(error)
+      }
+    })
+  }
 }
