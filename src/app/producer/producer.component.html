@@ -1,8 +1,8 @@
-<p>producer works!</p>
+<h2>Termelők</h2>
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary mb-2" 
-data-bs-toggle="modal" data-bs-target="#operationModal">
+(click)="setShowModal()">
   Hozzáadás
 </button>
 
@@ -16,23 +16,23 @@ data-bs-toggle="modal" data-bs-target="#operationModal">
             <th>Alapítás éve</th>
             <th>Kapacitás (hektár)</th>
             <th></th>
-            <th></th>
+
         </tr>
     </thead>
     <tbody>
         @for(producer of producers ; track producer.id) {
             <tr>
-                <td>{{producer.id}}</td>
-                <td>{{producer.name}}</td>
-                <td>{{producer.country}}</td>
-                <td>{{producer.yearOfFoundation}}</td>
-                <td>{{producer.capacityHectare}}</td>
+                <td data-column="Id">{{producer.id}}</td>
+                <td data-column="Név">{{producer.name}}</td>
+                <td data-column="Ország">{{producer.country}}</td>
+                <td data-column="Alapítás">{{producer.yearOfFoundation}}</td>
+                <td data-column="Kapacitás">{{producer.capacityHectare}}</td>
                 <td>
-                    <button class="btn btn-primary" (click)="editProducer(producer)"
-                    data-bs-toggle="modal" data-bs-target="#operationModal">
+                    <button class="btn btn-primary btn-sm" (click)="editProducer(producer)">
                         Módosítás
                     </button>
-                    <button class="btn btn-danger" (click)="deleteProducer(producer.id)">
+                    <button class="btn btn-danger btn-sm ms-2" 
+                    (click)="startDeleteProducer(producer.id)">
                         Törlés
                     </button>
 
@@ -43,11 +43,13 @@ data-bs-toggle="modal" data-bs-target="#operationModal">
 </table>
 
 
-
+@if(showModal) {
 
 <!-- Modal -->
-<div class="modal fade" id="operationModal" tabindex="-1" 
-aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade show" id="operationModal" tabindex="-1" 
+aria-labelledby="exampleModalLabel" aria-hidden="true"
+style="display: block;"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -58,7 +60,8 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                 Módosítás
             }
         </h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" 
+        (click)="cancel()" aria-label="Close"></button>
       </div>
       <div class="modal-body">
 
@@ -98,7 +101,9 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" 
+        (click)="cancel()">Close</button>
+        
         <button type="submit" class="btn btn-primary"
         data-bs-dismiss="modal"
         form="producerForm">
@@ -108,3 +113,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
     </div>
   </div>
 </div>
+
+    <div class="modal-backdrop fade show"></div>
+
+}
